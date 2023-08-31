@@ -1,4 +1,4 @@
---Slide 1
+--Retreieve all family movies from database and then count movies per categorie
 WITH fam_film AS (
     SELECT f.film_id,
            f.title AS film_title,
@@ -26,7 +26,8 @@ SELECT ff.cat_name,
  ORDER BY 2 DESC;
 
 
---Slide 2
+--Retrieve family movies and split days of rental duration on quartiles, then 
+--count how many movies are on each quartile of rental duration to see data distribution
 WITH fam_film AS (
     SELECT f.film_id,
            f.title AS film_title,
@@ -53,7 +54,7 @@ SELECT cat_name AS name,
  ORDER BY 1,2;
 
 
---Slide 3
+--Get movie rentals per month per store for finance
 SELECT DATE_PART('month',r.rental_date) AS rental_month,
        DATE_PART('year',r.rental_date)  AS rental_year,
        s.store_id,
@@ -65,7 +66,8 @@ SELECT DATE_PART('month',r.rental_date) AS rental_month,
  ORDER BY 2,1,4 DESC;
 
 
---Slide 4
+--Get the top 10 customers and calculate how many movies rent per month 
+--and how much do they spend per month as well
 WITH top10cust AS (
     SELECT customer_id,
            SUM(amount) AS sum_amount
@@ -85,12 +87,3 @@ SELECT DATE_TRUNC('month',p.payment_date) AS pay_mon,
                            FROM top10cust)
  GROUP BY 1,2
  ORDER BY 2,1;
-
-/* CHANGES
-1. Formated all queries for readability.
-   Changed TABS for SPACES to have consistent results among editors
-   (atom, udacity workspace, pgAdmin)
-2. Modified 'Query Slide 1' to avoid further processing between output and graph
-3. Changed commenting style for single line comments to double dash
-4. Sorted bars on query 'Slide 1' .
-5. Added 'AS' keyword on line 48 since was producing an error on udacity workspace.*/
